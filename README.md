@@ -1,5 +1,7 @@
 # @jinxcapital/api
 
+![code-review](https://github.com/jinxcapital/api/workflows/code-review/badge.svg)
+
 ## Setup
 
 ### Dependencies

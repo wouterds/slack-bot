@@ -1,6 +1,7 @@
 # @jinxcapital/api
 
 ![code-review](https://github.com/jinxcapital/api/workflows/code-review/badge.svg)
+![docker-image](https://github.com/jinxcapital/api/workflows/docker-image/badge.svg)
 
 ## Setup
 

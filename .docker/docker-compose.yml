@@ -1,0 +1,20 @@
+version: '2.1'
+
+services:
+  node:
+    image: ghcr.io/jinxcapital/api
+    container_name: capital.jinx.api
+    restart: unless-stopped
+    mem_limit: 32mb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.capitaljinxapi-http.rule=Host(`api.jinx.capital`)"
+      - "traefik.http.routers.capitaljinxapi-http.entrypoints=web"
+      - "traefik.docker.network=reverse-proxy"
+    networks:
+      - default
+      - reverse-proxy
+
+networks:
+  reverse-proxy:
+    external: true

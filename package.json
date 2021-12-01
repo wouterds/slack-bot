@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "ts-node ./src/http/application.ts",
+    "prepare": "husky install",
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint --ext '.ts,.js' src && tsc --noEmit",
     "lint:fix": "eslint --ext '.ts,.js' --fix src"

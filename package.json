@@ -2,7 +2,8 @@
   "name": "@jinxcapital/api",
   "private": true,
   "scripts": {
-    "dev": "ts-node ./src/http/application.ts"
+    "dev": "ts-node ./src/http/application.ts",
+    "build": "rm -rf ./dist && tsc"
   },
   "dependencies": {
     "dotenv": "^10.0.0",

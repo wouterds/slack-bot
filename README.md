@@ -2,6 +2,7 @@
 
 ![code-review](https://github.com/jinxcapital/api/workflows/code-review/badge.svg)
 ![docker-image](https://github.com/jinxcapital/api/workflows/docker-image/badge.svg)
+![deploy](https://github.com/jinxcapital/api/workflows/deploy/badge.svg)
 
 ## Setup
 

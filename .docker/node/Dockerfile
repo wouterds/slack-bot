@@ -1,4 +1,4 @@
-FROM arm64v8/node:14-alpine
+FROM arm64v8/node:16-alpine
 WORKDIR /code
 
 COPY ./tsconfig.json ./tsconfig.json
@@ -9,7 +9,7 @@ COPY ./src ./src
 RUN yarn --frozen-lockfile
 RUN yarn build
 
-FROM arm64v8/node:14-alpine
+FROM arm64v8/node:16-alpine
 WORKDIR /code
 
 COPY ./package.json ./package.json
@@ -17,7 +17,7 @@ COPY ./yarn.lock ./yarn.lock
 
 RUN yarn --frozen-lockfile --production
 
-FROM arm64v8/node:14-alpine
+FROM arm64v8/node:16-alpine
 WORKDIR /code
 
 ARG HOST

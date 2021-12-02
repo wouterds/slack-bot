@@ -30,4 +30,4 @@ EXPOSE $PORT
 COPY --from=0 /code/dist /code
 COPY --from=1 /code/node_modules /code/node_modules
 
-CMD ["node", "./application"]
+CMD ["node", "-r", "./bootstrap.js", "./http/application"]

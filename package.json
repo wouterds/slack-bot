@@ -2,7 +2,7 @@
   "name": "@jinxcapital/api",
   "private": true,
   "scripts": {
-    "dev": "ts-node ./src/http/application.ts",
+    "dev": "nodemon",
     "prepare": "husky install",
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint --ext '.ts,.js' src && tsc --noEmit",

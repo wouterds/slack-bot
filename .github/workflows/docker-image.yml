@@ -14,8 +14,6 @@ env:
   USER: ${{ github.actor }}
   PASS: ${{ secrets.GITHUB_TOKEN }}
   IMAGE_NAME: ${{ github.repository }}
-  HOST: ${{ secrets.HOST }}
-  PORT: ${{ secrets.PORT }}
 
 jobs:
   docker-image:
@@ -45,8 +43,5 @@ jobs:
         with:
           file: .docker/node/Dockerfile
           context: .
-          build-args: |
-            HOST=${{ env.HOST }}
-            PORT=${{ env.PORT }}
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}

@@ -1,5 +1,5 @@
 {
   "watch": ["src"],
-  "exec": "ts-node -r ./src/bootstrap.ts ./src/http/application",
+  "exec": "ts-node -r ./src/bootstrap.ts ./src/server",
   "ext": "js,ts"
 }

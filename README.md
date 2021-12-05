@@ -1,8 +1,8 @@
-# @jinxcapital/api
+# @jinxcapital/slack-bot
 
-![code-review](https://github.com/jinxcapital/api/workflows/code-review/badge.svg)
-![docker-image](https://github.com/jinxcapital/api/workflows/docker-image/badge.svg)
-![deploy](https://github.com/jinxcapital/api/workflows/deploy/badge.svg)
+![code-review](https://github.com/jinxcapital/slack-bot/workflows/code-review/badge.svg)
+![docker-image](https://github.com/jinxcapital/slack-bot/workflows/docker-image/badge.svg)
+![deploy](https://github.com/jinxcapital/slack-bot/workflows/deploy/badge.svg)
 
 ## Setup
 

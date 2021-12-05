@@ -20,14 +20,7 @@ RUN yarn --frozen-lockfile --production
 FROM arm64v8/node:16-alpine
 WORKDIR /code
 
-ARG HOST
-ENV HOST=$HOST
-ARG PORT
-ENV PORT=$PORT
-
-EXPOSE $PORT
-
 COPY --from=0 /code/dist /code
 COPY --from=1 /code/node_modules /code/node_modules
 
-CMD ["node", "-r", "./bootstrap.js", "./http/application"]
+CMD ["node", "-r", "./bootstrap.js", "./server"]

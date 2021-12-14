@@ -2,6 +2,6 @@
 
 // cron.schedule('*/5 * * * *', someTask);
 
-(async () => {
-  console.log('Starting slack bot');
-})();
+import SlackBot from './slack-bot';
+
+SlackBot.start();

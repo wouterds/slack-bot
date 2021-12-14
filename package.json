@@ -9,6 +9,7 @@
     "lint:fix": "eslint --ext '.ts,.js' --fix src"
   },
   "dependencies": {
+    "@slack/bolt": "^3.8.1",
     "dotenv": "^10.0.0",
     "node-cron": "^3.0.0",
     "tsconfig-paths": "^3.12.0"

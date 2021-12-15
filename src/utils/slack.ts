@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export const slackPostMessage = async (options: {
+export const postSlackMessage = async (options: {
   text: string;
   channel?: string;
   blocks?: unknown[];

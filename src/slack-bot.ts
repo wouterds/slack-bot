@@ -1,4 +1,5 @@
 import { App as Slack } from '@slack/bolt';
+import { findCoin, getCoinData } from 'utils/coin';
 
 const slack = new Slack({
   token: process.env.SLACK_BOT_TOKEN,
@@ -18,12 +19,39 @@ const start = async () => {
     say('wadup?');
   });
 
-  slack.message('!price', async ({ message }) => {
+  slack.message('!price', async ({ say, message }) => {
     console.log('💬 !price');
 
-    const coin = `${(message as any)?.text}`.replace('!price ', '');
+    const q = `${(message as any)?.text}`.replace('!price ', '');
 
-    console.log({ coin });
+    try {
+      const result = await findCoin(q);
+      if (!result) {
+        console.log(`Couldn't find coin "${q}"`);
+        await say(`bruh, tf do i know what "${q}" is`);
+        return;
+      }
+
+      if (Array.isArray(result)) {
+        if (result.length > 1) {
+          console.log(
+            `Found multiple coins for "${q}": ${result
+              .map((coin) => coin.name)
+              .join(', ')}`,
+          );
+        }
+
+        return;
+      }
+
+      const coin = await getCoinData(result.id);
+
+      console.log(coin);
+    } catch {
+      say(
+        "I'm having trouble connecting to https://api.jinx.capital - please try again in a minute",
+      );
+    }
   });
 };
 

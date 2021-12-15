@@ -12,7 +12,7 @@ export const getCoinData = async (coin: string): Promise<Coin | null> => {
       `https://api.jinx.capital/coins/${encodeURIComponent(coin)}`,
     );
 
-    return response.json() as any as Coin;
+    return (await response.json()).data as CoinListItem;
   } catch {
     return null;
   }

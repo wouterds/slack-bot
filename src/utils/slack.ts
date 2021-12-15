@@ -138,7 +138,7 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
 
   const payload = { text, blocks, unfurl_links: false };
 
-  if (!coin.rank || coin.rank > 500 || STABLECOINS.includes(coin.symbol)) {
+  if (!coin.rank || coin.rank > 1000 || STABLECOINS.includes(coin.symbol)) {
     return payload;
   }
 

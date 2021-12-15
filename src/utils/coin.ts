@@ -23,21 +23,43 @@ export const findCoin = async (
     const response = await fetch(`https://api.jinx.capital/coins`);
     const coins = (await response.json()).data as CoinListItem[];
 
-    const result = coins.filter(
-      (coin) =>
-        coin.name?.toLowerCase() === q?.toLowerCase() ||
-        coin.symbol?.toLowerCase() === q?.toLowerCase(),
+    const ids = coins.filter(
+      (coin) => coin.id?.toLowerCase() === q?.toLowerCase(),
     );
 
-    if (result.length === 1) {
-      return result[0];
+    if (ids.length === 1) {
+      return ids[0];
     }
 
-    if (result.length === 0) {
-      return null;
+    if (ids.length > 1) {
+      return ids;
     }
 
-    return result;
+    const symbols = coins.filter(
+      (coin) => coin.symbol?.toLowerCase() === q?.toLowerCase(),
+    );
+
+    if (symbols.length === 1) {
+      return symbols[0];
+    }
+
+    if (symbols.length > 1) {
+      return symbols;
+    }
+
+    const names = coins.filter(
+      (coin) => coin.name?.toLowerCase() === q?.toLowerCase(),
+    );
+
+    if (names.length === 1) {
+      return names[0];
+    }
+
+    if (names.length > 1) {
+      return names;
+    }
+
+    return null;
   } catch {
     return null;
   }

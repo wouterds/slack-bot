@@ -4,6 +4,7 @@ import { STABLECOINS } from 'types/coin';
 
 import { findUsdPeggedChartForCoin } from './chart';
 import { getCoinData } from './coin';
+import { uploadImageFromUrl } from './imgur';
 
 export const generateSlackPayloadForCoinId = async (id: string) => {
   const coin = await getCoinData(id);
@@ -140,7 +141,9 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
   }
 
   try {
-    const chartImageUrl = await findUsdPeggedChartForCoin(coin);
+    const chartImageUrl = await uploadImageFromUrl(
+      (await findUsdPeggedChartForCoin(coin)) || '',
+    );
 
     if (chartImageUrl) {
       blocks.push({

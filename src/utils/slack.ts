@@ -40,6 +40,14 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     style: 'currency',
   });
 
+  const marketCapFormatter = Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 1,
+    currency: coin.quoteCurrency,
+    style: 'currency',
+  });
+
   const text = `${coin.name} went ${
     coin.percentageChange24h > 0 ? 'up' : 'down'
   } with ${percentageFormatter.format(
@@ -48,7 +56,52 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     coin.price,
   )}.`;
 
-  return { text };
+  const fields = [
+    {
+      type: 'mrkdwn',
+      text: `*Price*\n${priceFormatter.format(coin.price)}`,
+    },
+    {
+      type: 'mrkdwn',
+      text: `*Market cap*\n${
+        coin.marketCap ? marketCapFormatter.format(coin.marketCap) : '--'
+      }`,
+    },
+    {
+      type: 'mrkdwn',
+      text: `*Change (24h)*\n${percentageFormatter.format(
+        coin.percentageChange24h / 100,
+      )}`,
+    },
+    {
+      type: 'mrkdwn',
+      text: `*Change (7d)*\n${percentageFormatter.format(
+        coin.percentageChange7d / 100,
+      )}`,
+    },
+  ];
+
+  const title = `*${coin.website ? `<${coin.website}|` : ''}${
+    coin.name
+  } (${coin.symbol.toUpperCase()})${coin.website ? '>' : ''}*\n${text}`;
+
+  const blocks = [
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: title,
+      },
+      fields,
+      accessory: {
+        type: 'image',
+        image_url: `https://api.jinx.capital${coin.imageUrl}`,
+        alt_text: `${coin.symbol} logo`,
+      },
+    },
+  ];
+
+  return { text, blocks, unfurl_links: false };
 };
 
 export const postSlackMessage = async (options: {

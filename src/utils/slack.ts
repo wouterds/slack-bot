@@ -82,16 +82,28 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     },
   ];
 
-  if (coin.ath) {
+  fields.push({
+    type: 'mrkdwn',
+    text: `*ATH*\n${priceFormatter.format(
+      coin.isAtAth ? coin.price : coin.ath,
+    )}${
+      coin.isAtAth
+        ? ''
+        : ` (${formatDistanceToNowStrict(fromUnixTime(coin.athDate))} ago)`
+    }`,
+  });
+
+  if (coin.isAtAth) {
     fields.push({
       type: 'mrkdwn',
-      text: `*ATH*\n${priceFormatter.format(
-        coin.isAtAth ? coin.price : coin.ath,
-      )}${
-        coin.isAtAth
-          ? ''
-          : ` (${formatDistanceToNowStrict(fromUnixTime(coin.athDate))} ago)`
-      }`,
+      text: `*Pullback*\n--`,
+    });
+  } else {
+    fields.push({
+      type: 'mrkdwn',
+      text: `*Pullback*\n${priceFormatter.format(
+        coin.pullback,
+      )} (${percentageFormatter.format(-coin.pullbackPercentage / 100)})`,
     });
   }
 

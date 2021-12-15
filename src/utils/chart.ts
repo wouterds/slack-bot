@@ -9,9 +9,12 @@ export const findUsdPeggedChartForCoin = async (coin: Coin) => {
     try {
       const { status } = await fetch(chartUrl);
       if (status === 200) {
+        console.log(`✅ ${chartUrl}`);
         return chartUrl;
       }
     } catch {}
+
+    console.log(`❌ ${chartUrl}`);
   }
 
   return null;

@@ -61,7 +61,7 @@ export const findCoin = async (
 
     return null;
   } catch {
-    return null;
+    throw new Error('API Error');
   }
 };
 
@@ -75,6 +75,6 @@ export const getCoinData = async (
 
     return (await response.json()).data as CoinListItem;
   } catch {
-    return null;
+    throw new Error('API Error');
   }
 };

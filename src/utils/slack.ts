@@ -1,6 +1,8 @@
 import { formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import fetch from 'node-fetch';
+import { STABLECOINS } from 'types/coin';
 
+import { findUsdPeggedChartForCoin } from './chart';
 import { getCoinData } from './coin';
 
 export const generateSlackPayloadForCoinId = async (id: string) => {
@@ -70,15 +72,19 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     },
     {
       type: 'mrkdwn',
-      text: `*Change (24h)*\n${percentageFormatter.format(
-        coin.percentageChange24h / 100,
-      )}`,
+      text: `*Change (24h)*\n${
+        Math.round(coin.percentageChange24h) === 0
+          ? '--'
+          : percentageFormatter.format(coin.percentageChange24h / 100)
+      }`,
     },
     {
       type: 'mrkdwn',
-      text: `*Change (7d)*\n${percentageFormatter.format(
-        coin.percentageChange7d / 100,
-      )}`,
+      text: `*Change (7d)*\n${
+        Math.round(coin.percentageChange7d) === 0
+          ? '--'
+          : percentageFormatter.format(coin.percentageChange7d / 100)
+      }`,
     },
   ];
 
@@ -128,6 +134,28 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
       },
     },
   ];
+
+  if (!coin.rank || coin.rank > 500 || STABLECOINS.includes(coin.symbol)) {
+    return { text, blocks, unfurl_links: false };
+  }
+
+  try {
+    const chartImageUrl = await findUsdPeggedChartForCoin(coin);
+
+    if (chartImageUrl) {
+      blocks.push({
+        type: 'image',
+        title: {
+          type: 'plain_text',
+          text: `${coin.symbol.toLowerCase()}-chart.jpg`,
+        },
+        image_url: chartImageUrl,
+        alt_text: `${coin.symbol.toLowerCase()}-chart.jpg`,
+      } as any);
+    }
+  } catch {
+    return { text, blocks, unfurl_links: false };
+  }
 
   return { text, blocks, unfurl_links: false };
 };

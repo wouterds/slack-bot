@@ -86,6 +86,12 @@ const start = async () => {
       }
 
       const payload = await generateSlackPayloadForCoinId(result.id);
+      if (!payload) {
+        say(
+          `Had trouble loading data https://api.jinx.capital/coins/${result.id} - please try again in a minute`,
+        );
+        return;
+      }
 
       console.log(payload);
     } catch {
@@ -107,6 +113,12 @@ const start = async () => {
 
       try {
         const payload = await generateSlackPayloadForCoinId(id);
+        if (!payload) {
+          say(
+            `Had trouble loading data https://api.jinx.capital/coins/${id} - please try again in a minute`,
+          );
+          return;
+        }
 
         console.log(payload);
       } catch {

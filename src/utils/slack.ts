@@ -4,6 +4,9 @@ import { getCoinData } from './coin';
 
 export const generateSlackPayloadForCoinId = async (id: string) => {
   const coin = await getCoinData(id);
+  if (!coin) {
+    return null;
+  }
 
   return coin;
 };

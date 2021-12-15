@@ -1,5 +1,13 @@
 import fetch from 'node-fetch';
 
+import { getCoinData } from './coin';
+
+export const generateSlackPayloadForCoinId = async (id: string) => {
+  const coin = await getCoinData(id);
+
+  return coin;
+};
+
 export const postSlackMessage = async (options: {
   text: string;
   channel?: string;

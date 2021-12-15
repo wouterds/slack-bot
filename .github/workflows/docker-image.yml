@@ -14,6 +14,10 @@ env:
   USER: ${{ github.actor }}
   PASS: ${{ secrets.GITHUB_TOKEN }}
   IMAGE_NAME: ${{ github.repository }}
+  SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+  IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
 
 jobs:
   docker-image:
@@ -43,5 +47,10 @@ jobs:
         with:
           file: .docker/node/Dockerfile
           context: .
+          build-args: |
+            SLACK_SIGNING_SECRET=${{ env.SLACK_SIGNING_SECRET }}
+            SLACK_BOT_TOKEN=${{ env.SLACK_BOT_TOKEN }}
+            SLACK_APP_TOKEN=${{ env.SLACK_APP_TOKEN }}
+            IMGUR_CLIENT_ID=${{ env.IMGUR_CLIENT_ID }}
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}

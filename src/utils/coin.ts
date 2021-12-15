@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { Coin } from 'types/coin';
 
 type CoinListItem = {
   id: string;
@@ -61,12 +62,10 @@ export const findCoin = async (
   return null;
 };
 
-export const getCoinData = async (
-  coin: string,
-): Promise<CoinListItem | null> => {
+export const getCoinData = async (coin: string): Promise<Coin | null> => {
   const response = await fetch(
     `https://api.jinx.capital/coins/${encodeURIComponent(coin)}`,
   );
 
-  return (await response.json()).data as CoinListItem;
+  return ((await response.json()).data as Coin) || null;
 };

@@ -5,4 +5,4 @@ services:
     image: ghcr.io/jinxcapital/slack-bot
     container_name: capital.jinx.slack-bot
     restart: unless-stopped
-    mem_limit: 32mb
+    mem_limit: 64mb

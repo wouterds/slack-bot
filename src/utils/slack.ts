@@ -1,3 +1,4 @@
+import { formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import fetch from 'node-fetch';
 
 import { getCoinData } from './coin';
@@ -81,9 +82,24 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     },
   ];
 
+  if (coin.ath) {
+    fields.push({
+      type: 'mrkdwn',
+      text: `*ATH*\n${priceFormatter.format(
+        coin.isAtAth ? coin.price : coin.ath,
+      )}${
+        coin.isAtAth
+          ? ''
+          : ` (${formatDistanceToNowStrict(fromUnixTime(coin.athDate))} ago)`
+      }`,
+    });
+  }
+
   const title = `*${coin.website ? `<${coin.website}|` : ''}${
     coin.name
-  } (${coin.symbol.toUpperCase()})${coin.website ? '>' : ''}*\n${text}`;
+  } (${coin.symbol.toUpperCase()})${coin.website ? '>' : ''}${
+    coin.isAtAth ? ' 🔥' : ''
+  }*\n${text}`;
 
   const blocks = [
     {

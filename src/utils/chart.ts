@@ -1,22 +1,8 @@
 import fetch from 'node-fetch';
-import { Coin } from 'types/coin';
-
-const QUOTE_CURRENCIES = [
-  'usd',
-  'usdt',
-  'usdc',
-  'busd',
-  'dai',
-  'gusd',
-  'ust',
-  'tusd',
-  'usdp',
-  'fei',
-  'frax',
-];
+import { Coin, STABLECOINS } from 'types/coin';
 
 export const findUsdPeggedChartForCoin = async (coin: Coin) => {
-  for (const quote of QUOTE_CURRENCIES) {
+  for (const quote of STABLECOINS) {
     const chartUrl =
       `https://api.jinx.capital/chart/${coin.symbol}:${quote}.jpg`.toLowerCase();
 

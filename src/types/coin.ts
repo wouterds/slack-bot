@@ -16,3 +16,17 @@ export type Coin = {
   pullback: number;
   isAtAth: boolean;
 };
+
+export const STABLECOINS = [
+  'usd',
+  'usdt',
+  'usdc',
+  'busd',
+  'dai',
+  'gusd',
+  'ust',
+  'tusd',
+  'usdp',
+  'fei',
+  'frax',
+];

@@ -109,7 +109,7 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     fields.push({
       type: 'mrkdwn',
       text: `*Pullback*\n${priceFormatter.format(
-        coin.pullback,
+        -coin.pullback,
       )} (${percentageFormatter.format(-coin.pullbackPercentage / 100)})`,
     });
   }

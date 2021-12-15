@@ -8,7 +8,47 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     return null;
   }
 
-  return coin;
+  const percentageFormatter = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    signDisplay: 'always',
+  });
+
+  const fractionDigits =
+    coin.price >= 10000
+      ? 1
+      : coin.price > 1000
+      ? 0
+      : coin.price > 100
+      ? 1
+      : coin.price > 0.1
+      ? 2
+      : coin.price > 0.01
+      ? 4
+      : coin.price > 0.0001
+      ? 6
+      : coin.price > 0.000001
+      ? 8
+      : 10;
+
+  const priceFormatter = Intl.NumberFormat('en-US', {
+    notation: coin.price >= 10000 ? 'compact' : undefined,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: fractionDigits,
+    currency: coin.quoteCurrency,
+    style: 'currency',
+  });
+
+  const text = `${coin.name} went ${
+    coin.percentageChange24h > 0 ? 'up' : 'down'
+  } with ${percentageFormatter.format(
+    coin.percentageChange24h / 100,
+  )} in the last 24h, 1 ${coin.symbol.toUpperCase()} = ${priceFormatter.format(
+    coin.price,
+  )}.`;
+
+  return { text };
 };
 
 export const postSlackMessage = async (options: {

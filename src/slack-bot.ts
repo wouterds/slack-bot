@@ -35,11 +35,7 @@ const start = async () => {
 
       if (Array.isArray(result)) {
         if (result.length > 1) {
-          console.log(
-            `Found multiple coins for "${q}": ${result
-              .map((coin) => coin.name)
-              .join(', ')}`,
-          );
+          console.log(`Choice: ${result.map((coin) => coin.name).join(' | ')}`);
 
           say({
             text: `Found multiple coins for "${q}", which one did you mean?`,
@@ -93,8 +89,10 @@ const start = async () => {
         return;
       }
 
-      console.log(payload);
-    } catch {
+      console.log(payload.text);
+      say(payload);
+    } catch (e) {
+      console.log(e);
       say(
         "I'm having trouble connecting to https://api.jinx.capital - please try again in a minute",
       );
@@ -120,8 +118,10 @@ const start = async () => {
           return;
         }
 
-        console.log(payload);
-      } catch {
+        console.log(payload.text);
+        say(payload);
+      } catch (e) {
+        console.log(e);
         say(
           "I'm having trouble connecting to https://api.jinx.capital - please try again in a minute",
         );

@@ -136,8 +136,10 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     },
   ];
 
+  const payload = { text, blocks, unfurl_links: false };
+
   if (!coin.rank || coin.rank > 500 || STABLECOINS.includes(coin.symbol)) {
-    return { text, blocks, unfurl_links: false };
+    return payload;
   }
 
   try {
@@ -146,7 +148,7 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
     );
 
     if (chartImageUrl) {
-      blocks.push({
+      payload.blocks.push({
         type: 'image',
         title: {
           type: 'plain_text',
@@ -156,11 +158,9 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
         alt_text: `${coin.symbol.toLowerCase()}-chart.jpg`,
       } as any);
     }
-  } catch {
-    return { text, blocks, unfurl_links: false };
-  }
+  } catch {}
 
-  return { text, blocks, unfurl_links: false };
+  return payload;
 };
 
 export const postSlackMessage = async (options: {

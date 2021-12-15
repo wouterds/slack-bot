@@ -13,7 +13,7 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
 
   const percentageFormatter = new Intl.NumberFormat('en-US', {
     style: 'percent',
-    minimumFractionDigits: 0,
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2,
     signDisplay: 'always',
   });
@@ -37,7 +37,7 @@ export const generateSlackPayloadForCoinId = async (id: string) => {
 
   const priceFormatter = Intl.NumberFormat('en-US', {
     notation: coin.price >= 10000 ? 'compact' : undefined,
-    minimumFractionDigits: 0,
+    minimumFractionDigits: coin.price < 1 ? 2 : 0,
     maximumFractionDigits: fractionDigits,
     currency: coin.quoteCurrency,
     style: 'currency',
